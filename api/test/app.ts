@@ -4,6 +4,7 @@ import { Test } from '@nestjs/testing';
 import { sql } from 'drizzle-orm';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { Response } from 'supertest';
+import { ACCESS_TOKEN_COOKIE } from '../src/auth/auth.cookie.js';
 import { AppModule } from '../src/app.module.js';
 
 export async function createTestApp() {
@@ -25,5 +26,5 @@ export const setCookies = (res: Response) =>
 /** The `name=value` pair of the login cookie, ready to send back as a Cookie header. */
 export const loginCookie = (res: Response) =>
   setCookies(res)
-    .find((c) => c.startsWith('access_token='))
+    .find((c) => c.startsWith(`${ACCESS_TOKEN_COOKIE}=`))
     ?.split(';')[0] ?? '';

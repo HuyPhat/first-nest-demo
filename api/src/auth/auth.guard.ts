@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<AuthenticatedRequest>();
+    // ponytail: regex over the one cookie we read; switch to cookie-parser if more cookies are needed.
     const token = new RegExp(`(?:^|;\\s*)${ACCESS_TOKEN_COOKIE}=([^;]+)`).exec(
       req.headers.cookie ?? '',
     )?.[1];
