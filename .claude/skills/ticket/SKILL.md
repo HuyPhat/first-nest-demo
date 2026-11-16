@@ -13,6 +13,8 @@ Read issue N (`docs/agents/issue-tracker.md`). Done when the working tree is cle
 
 ## 2. Tidy
 
+A worktree made by `gh issue develop N --worktree` already sits on N's branch: when the current branch starts with `N-`, skip to step 4.
+
 Done when local `main` is current and no local branch has a merged PR: `git switch main && git pull`, then `git branch -D` each local branch that `gh pr list --state merged --head <branch>` returns. Squash merges leave `-d` refusing; the merged PR is the proof `-D` needs. Remote branches stay.
 
 ## 3. Branch
