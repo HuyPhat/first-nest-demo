@@ -1,27 +1,14 @@
 import type { INestApplication } from '@nestjs/common';
-import { getDrizzleToken } from '@nestjs/drizzle';
-import { Test } from '@nestjs/testing';
-import { sql } from 'drizzle-orm';
-import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import request from 'supertest';
-import { AppModule } from '../src/app.module.js';
+import { createTestApp, resetUsers } from './app.js';
 
 describe('Register (POST /auth/register)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-    app = moduleRef.createNestApplication();
-    await app.init();
+    app = await createTestApp();
   });
-
-  beforeEach(async () => {
-    await app
-      .get<NodePgDatabase>(getDrizzleToken())
-      .execute(sql`truncate users`);
-  });
+  beforeEach(() => resetUsers(app));
 
   afterAll(() => app.close());
 
