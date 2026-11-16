@@ -6,12 +6,14 @@ import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { Response } from 'supertest';
 import { ACCESS_TOKEN_COOKIE } from '../src/auth/auth.cookie.js';
 import { AppModule } from '../src/app.module.js';
+import { setupSwagger } from '../src/swagger.js';
 
 export async function createTestApp() {
   const moduleRef = await Test.createTestingModule({
     imports: [AppModule],
   }).compile();
   const app = moduleRef.createNestApplication();
+  setupSwagger(app);
   await app.init();
   return app;
 }
