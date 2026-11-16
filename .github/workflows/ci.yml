@@ -71,6 +71,9 @@ jobs:
         working-directory: web
       - run: pnpm exec playwright install --with-deps chromium
         working-directory: web
+      # LayoutProps and other route types are generated, and a fresh checkout has none.
+      - run: pnpm exec next typegen
+        working-directory: web
       - run: pnpm exec tsc --noEmit
         working-directory: web
       - run: pnpm lint
