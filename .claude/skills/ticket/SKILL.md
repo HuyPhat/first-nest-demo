@@ -29,6 +29,10 @@ Done when the issue's branch is checked out: `gh issue develop N --checkout --ba
 
 Invoke `ponytail:ponytail-review` on the diff against `main`. Done when the user has seen every finding and chosen which to apply; apply those, rerun the tests, commit. No findings: say so and move on.
 
-## 6. Ship
+## 6. README
 
-Done when the PR is open and the user has the PR URL plus one `gh pr checks` report. Push the branch, then `gh pr create` with a body written by `mattpocock-skills:pr`, ending in `Closes #N`. Merging stays with the user.
+Done when `README.md` matches the branch. If the diff against `main` changes an endpoint, route, command, env var, or setup step, or finishes something the README's Status table lists as not done, update the README and commit it on this branch. Otherwise leave it.
+
+## 7. Ship
+
+Done when the PR is open and the user has the PR URL plus one `gh pr checks` report. Push the branch, then `gh pr create` with a body written by `mattpocock-skills:pr`, ending in the checkbox line from `.github/pull_request_template.md` (ticked, or ticked with "no README change needed") and `Closes #N`. `gh pr create --body` skips the template, so add the line by hand. Merging stays with the user.
