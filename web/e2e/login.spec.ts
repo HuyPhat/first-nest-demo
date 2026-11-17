@@ -18,12 +18,14 @@ test('logging in with correct credentials shows the profile with the User email'
   await expect(page).toHaveURL('/profile');
   await expect(page.getByText(email)).toBeVisible();
   await expect(page).toHaveTitle('Your profile | First Nest Demo');
+  await expect(page.getByRole('banner')).toHaveText('First Nest Demo');
 });
 
-test('the login page has its own title', async ({ page }) => {
+test('the login page has its own title and no site header', async ({ page }) => {
   await page.goto('/login');
 
   await expect(page).toHaveTitle('Log in | First Nest Demo');
+  await expect(page.getByRole('banner')).toHaveCount(0);
 });
 
 test('wrong credentials show one generic error on the login page', async ({
