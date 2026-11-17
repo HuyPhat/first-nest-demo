@@ -49,6 +49,44 @@ test('wrong credentials show one generic error on the login page', async ({
   }
 });
 
+test('the login error is tied to both fields and does not move the button', async ({ page }) => {
+  await page.goto('/login');
+  const button = page.getByRole('button', { name: 'Log in' });
+  const before = await button.boundingBox();
+  await page.getByLabel('Email').fill('nobody@example.com');
+  await page.getByLabel('Password').fill('wrong password');
+  await button.click();
+
+  await expect(page.locator('form').getByRole('alert')).toHaveText('Invalid email or password.');
+  for (const field of ['Email', 'Password']) {
+    const input = page.getByLabel(field);
+    await expect(input).toHaveAccessibleDescription('Invalid email or password.');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+  }
+  expect(await button.boundingBox()).toEqual(before);
+});
+
+test('an unreachable server and a server error each get their own message', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByLabel('Email').fill('ann@example.com');
+  await page.getByLabel('Password').fill(password);
+
+  await page.route('**/api/auth/login', (route) => route.abort());
+  await page.getByRole('button', { name: 'Log in' }).click();
+  await expect(page.locator('form').getByRole('alert')).toHaveText(
+    "Can't reach the server. Check your connection and try again.",
+  );
+  // Not a credentials problem, so the fields are not marked invalid.
+  await expect(page.getByLabel('Email')).not.toHaveAttribute('aria-invalid', 'true');
+
+  await page.unroute('**/api/auth/login');
+  await page.route('**/api/auth/login', (route) => route.fulfill({ status: 500 }));
+  await page.getByRole('button', { name: 'Log in' }).click();
+  await expect(page.locator('form').getByRole('alert')).toHaveText(
+    'Something went wrong on our side. Try again.',
+  );
+});
+
 test('the profile page redirects to login when logged out', async ({ page }) => {
   await page.goto('/profile');
 

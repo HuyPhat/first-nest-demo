@@ -7,6 +7,7 @@ colors:
   ink: "oklch(0.22 0.02 260)"
   ink-soft: "oklch(0.48 0.02 260)"
   rule: "oklch(0.89 0.008 260)"
+  field-rule: "oklch(0.64 0.02 260)"
   ledger-blue: "oklch(0.45 0.13 258)"
   ledger-blue-deep: "oklch(0.39 0.13 258)"
   on-ledger-blue: "oklch(0.99 0.003 255)"
@@ -116,18 +117,21 @@ A restrained palette: cool neutrals tinted toward one deep blue, plus a red kept
 - **Page** (`colors.page`): raised surfaces (header, input, detail card), pure white. It lifts off Paper by tone alone.
 - **Ink** (`colors.ink`): body text and headings, a blue-tinted near-black.
 - **Ink Soft** (`colors.ink-soft`): secondary text such as the lede and field captions.
-- **Rule** (`colors.rule`): the 1px border on every surface, and the loading skeleton fill.
+- **Rule** (`colors.rule`): the 1px border on non-interactive surfaces (header, detail card), and the loading skeleton fill. Deliberately faint.
+- **Field Rule** (`colors.field-rule`): the 1px border of every control that takes input. A step darker than Rule, at least 3:1 against both Page and Paper (3.36 and 3.13 in light, 3.38 and 3.72 in dark).
 
 ### Semantic
 - **Alert Red** (`colors.alert-red`) on **Alert Wash** (`colors.alert-wash`): error messages only.
 
 ### Dark mode (follows `prefers-color-scheme`)
-Paper `oklch(0.18 0.012 260)`, Page `oklch(0.225 0.014 260)`, Ink `oklch(0.95 0.006 260)`, Ink Soft `oklch(0.72 0.015 260)`, Rule `oklch(0.33 0.015 260)`. Ledger Blue becomes a lighter `oklch(0.74 0.12 255)` with hover `oklch(0.8 0.11 255)`, and On Ledger Blue becomes dark `oklch(0.18 0.012 260)`. Alert Red `oklch(0.78 0.13 25)` on Alert Wash `oklch(0.27 0.05 25)`. The accent flips from dark-on-light to light-on-dark, so the button reads the same in both modes.
+Paper `oklch(0.18 0.012 260)`, Page `oklch(0.225 0.014 260)`, Ink `oklch(0.95 0.006 260)`, Ink Soft `oklch(0.72 0.015 260)`, Rule `oklch(0.33 0.015 260)`, Field Rule `oklch(0.54 0.02 260)`. Ledger Blue becomes a lighter `oklch(0.74 0.12 255)` with hover `oklch(0.8 0.11 255)`, and On Ledger Blue becomes dark `oklch(0.18 0.012 260)`. Alert Red `oklch(0.78 0.13 25)` on Alert Wash `oklch(0.27 0.05 25)`. The accent flips from dark-on-light to light-on-dark, so the button reads the same in both modes.
 
 ### Named Rules
 **The One Voice Rule.** Ledger Blue is the only accent. It marks what can be acted on and where focus is. If something is blue, it is interactive.
 
 **The Red Is For Errors Rule.** Alert Red appears only when something went wrong. It is never used for emphasis, sale tags or decoration.
+
+**The Control Boundary Rule.** A control's edge must reach 3:1 against what it sits on (WCAG 1.4.11). Decorative hairlines stay faint; anything the User types into uses Field Rule.
 
 **The Tinted Neutral Rule.** Neutrals carry a trace of the accent's hue (255 to 260). Never use pure grey or pure black for text or borders; pure white is reserved for the Page surface.
 
@@ -171,7 +175,7 @@ Flat. The system uses tonal layering and a hairline border instead of shadow. A 
 
 ## Shapes
 
-One radius: 6px (`rounded-md`) on every control, card, message and skeleton. Borders are always 1px in Rule. There are no pill shapes, no fully square corners and no mixed radii, so the silhouette stays consistent from the smallest field to the largest card.
+One radius: 6px (`rounded-md`) on every control, card, message and skeleton. Borders are always 1px: Rule on surfaces, Field Rule on controls. There are no pill shapes, no fully square corners and no mixed radii, so the silhouette stays consistent from the smallest field to the largest card.
 
 ### Named Rules
 **The One Radius Rule.** 6px everywhere. Do not introduce a second radius for emphasis.
@@ -189,14 +193,15 @@ Character: clear and firm, never showy.
 - **Secondary / ghost:** not built yet.
 
 ### Inputs / Fields
-- **Style:** Page background, 1px Rule border, 6px radius, 12px by 8px padding, Body text, Ink Soft placeholder.
+- **Style:** Page background, 1px Field Rule border, 6px radius, 12px by 8px padding, Body text, Ink Soft placeholder.
 - **Label:** wraps the field (a `label` element around the text and input), Label type, 6px gap.
 - **Focus:** the global 2px Ledger Blue outline with 2px offset. No custom glow.
-- **Error:** the error is shown once, in an alert below the fields, not on each field.
+- **Error:** the error is shown once, in the alert below the button (see Alert), not on each field. Both fields point at it with `aria-describedby`; they get `aria-invalid` only when the Login was rejected, not for a network or server failure.
 
 ### Alert (error message)
 - **Style:** Alert Wash background, Alert Red text, Label size, 6px radius, 12px by 8px padding, no border. Rendered with `role="alert"` so it is announced.
-- **Copy:** says what happened without revealing which field was wrong ("Invalid email or password.").
+- **Position:** directly below the submit button, so showing it moves nothing the User is aiming at.
+- **Copy:** three cases, each says what failed and what to do. A rejected Login never reveals which field was wrong ("Invalid email or password."); an unreachable server says so ("Can't reach the server. Check your connection and try again."); anything else blames the system, not the User ("Something went wrong on our side. Try again.").
 
 ### Detail card
 - **Style:** Page background, 1px Rule border, 6px radius, 16px by 12px padding. A caption (Label type, Ink Soft) above a value (Body, may break long text).
@@ -210,7 +215,7 @@ Character: clear and firm, never showy.
 
 ### Do:
 - **Do** keep Ledger Blue for actions and focus only (The One Voice Rule).
-- **Do** separate surfaces with the Page/Paper tone difference and a 1px Rule.
+- **Do** separate surfaces with the Page/Paper tone difference and a 1px Rule, and outline inputs with Field Rule so their edges meet 3:1.
 - **Do** use 6px radius on everything, and 150ms colour-only transitions for state changes.
 - **Do** keep a visible 2px focus outline on every interactive element, and announce errors with `role="alert"`.
 - **Do** use the glossary's words in copy: User, Registration, Login.
