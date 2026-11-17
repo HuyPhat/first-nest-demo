@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T15:28:40.605Z",
+  "title": "Design System: First Nest Demo",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Cool Paper",
+        "canonical": "oklch(0.975 0.006 255)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 255)",
+          "oklch(0.25 0.008 255)",
+          "oklch(0.35 0.012 255)",
+          "oklch(0.45 0.012 255)",
+          "oklch(0.58 0.012 255)",
+          "oklch(0.72 0.012 255)",
+          "oklch(0.85 0.008 255)",
+          "oklch(0.95 0.004 255)"
+        ],
+        "dark": "oklch(0.18 0.012 260)"
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "White Page",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.25 0 0)",
+          "oklch(0.35 0 0)",
+          "oklch(0.45 0 0)",
+          "oklch(0.58 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.85 0 0)",
+          "oklch(0.95 0 0)"
+        ],
+        "dark": "oklch(0.225 0.014 260)"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Blue-Black Ink",
+        "canonical": "oklch(0.22 0.02 260)",
+        "tonalRamp": [
+          "oklch(0.15 0.007 260)",
+          "oklch(0.25 0.014 260)",
+          "oklch(0.35 0.02 260)",
+          "oklch(0.45 0.02 260)",
+          "oklch(0.58 0.02 260)",
+          "oklch(0.72 0.02 260)",
+          "oklch(0.85 0.014 260)",
+          "oklch(0.95 0.007 260)"
+        ],
+        "dark": "oklch(0.95 0.006 260)"
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(0.48 0.02 260)",
+        "tonalRamp": [
+          "oklch(0.15 0.007 260)",
+          "oklch(0.25 0.014 260)",
+          "oklch(0.35 0.02 260)",
+          "oklch(0.45 0.02 260)",
+          "oklch(0.58 0.02 260)",
+          "oklch(0.72 0.02 260)",
+          "oklch(0.85 0.014 260)",
+          "oklch(0.95 0.007 260)"
+        ],
+        "dark": "oklch(0.72 0.015 260)"
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "oklch(0.89 0.008 260)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 260)",
+          "oklch(0.25 0.008 260)",
+          "oklch(0.35 0.012 260)",
+          "oklch(0.45 0.012 260)",
+          "oklch(0.58 0.012 260)",
+          "oklch(0.72 0.012 260)",
+          "oklch(0.85 0.008 260)",
+          "oklch(0.95 0.004 260)"
+        ],
+        "dark": "oklch(0.33 0.015 260)"
+      },
+      "ledger-blue": {
+        "role": "primary",
+        "displayName": "Ledger Blue",
+        "canonical": "oklch(0.45 0.13 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.045 258)",
+          "oklch(0.25 0.091 258)",
+          "oklch(0.35 0.13 258)",
+          "oklch(0.45 0.13 258)",
+          "oklch(0.58 0.13 258)",
+          "oklch(0.72 0.13 258)",
+          "oklch(0.85 0.091 258)",
+          "oklch(0.95 0.045 258)"
+        ],
+        "dark": "oklch(0.74 0.12 255)"
+      },
+      "ledger-blue-deep": {
+        "role": "primary",
+        "displayName": "Ledger Blue Deep",
+        "canonical": "oklch(0.39 0.13 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.045 258)",
+          "oklch(0.25 0.091 258)",
+          "oklch(0.35 0.13 258)",
+          "oklch(0.45 0.13 258)",
+          "oklch(0.58 0.13 258)",
+          "oklch(0.72 0.13 258)",
+          "oklch(0.85 0.091 258)",
+          "oklch(0.95 0.045 258)"
+        ],
+        "dark": "oklch(0.8 0.11 255)"
+      },
+      "on-ledger-blue": {
+        "role": "neutral",
+        "displayName": "On Ledger Blue",
+        "canonical": "oklch(0.99 0.003 255)",
+        "tonalRamp": [
+          "oklch(0.15 0.002 255)",
+          "oklch(0.25 0.003 255)",
+          "oklch(0.35 0.005 255)",
+          "oklch(0.45 0.005 255)",
+          "oklch(0.58 0.005 255)",
+          "oklch(0.72 0.005 255)",
+          "oklch(0.85 0.003 255)",
+          "oklch(0.95 0.002 255)"
+        ],
+        "dark": "oklch(0.18 0.012 260)"
+      },
+      "alert-red": {
+        "role": "semantic",
+        "displayName": "Alert Red",
+        "canonical": "oklch(0.48 0.17 25)",
+        "tonalRamp": [
+          "oklch(0.15 0.059 25)",
+          "oklch(0.25 0.119 25)",
+          "oklch(0.35 0.17 25)",
+          "oklch(0.45 0.17 25)",
+          "oklch(0.58 0.17 25)",
+          "oklch(0.72 0.17 25)",
+          "oklch(0.85 0.119 25)",
+          "oklch(0.95 0.059 25)"
+        ],
+        "dark": "oklch(0.78 0.13 25)"
+      },
+      "alert-wash": {
+        "role": "semantic",
+        "displayName": "Alert Wash",
+        "canonical": "oklch(0.96 0.025 25)",
+        "tonalRamp": [
+          "oklch(0.15 0.014 25)",
+          "oklch(0.25 0.028 25)",
+          "oklch(0.35 0.04 25)",
+          "oklch(0.45 0.04 25)",
+          "oklch(0.58 0.04 25)",
+          "oklch(0.72 0.04 25)",
+          "oklch(0.85 0.028 25)",
+          "oklch(0.95 0.014 25)"
+        ],
+        "dark": "oklch(0.27 0.05 25)"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page title, once per page."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Values, field text and the lede."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, captions and error text."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Primary button label."
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "Wordmark text in the site header."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "state-colour",
+        "value": "150ms (Tailwind default easing), transition-colors",
+        "purpose": "Button hover colour change; no movement."
+      },
+      {
+        "name": "skeleton-pulse",
+        "value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "purpose": "Loading placeholder for the detail card."
+      }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one filled action in a form; Ledger Blue, colour-only hover.",
+      "html": "<button class=\"ds-btn-primary\">Log in</button>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-btn-primary{border:0;border-radius:6px;background:var(--accent);color:var(--on-accent);padding:10px 16px;font:500 1rem/1.5rem Geist,system-ui,sans-serif;width:100%;cursor:pointer;transition:background-color 150ms}.ds-btn-primary:hover{background:var(--accent-hover)}.ds-btn-primary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ds-btn-primary:disabled{opacity:.6}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A label wrapping a white field with a hairline border.",
+      "html": "<label class=\"ds-field\">Email<input class=\"ds-input\" type=\"email\" placeholder=\"you@example.com\"></label>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-field{display:flex;flex-direction:column;gap:6px;font:500 .875rem/1.25rem Geist,system-ui,sans-serif}.ds-input{border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--foreground);padding:8px 12px;font:400 1rem/1.5rem Geist,system-ui,sans-serif}.ds-input::placeholder{color:var(--muted)}.ds-input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
+    },
+    {
+      "name": "Error Alert",
+      "kind": "custom",
+      "refersTo": "alert",
+      "description": "A single generic error shown below the fields; never says which field was wrong.",
+      "html": "<p class=\"ds-alert\" role=\"alert\">Invalid email or password.</p>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-alert{margin:0;border-radius:6px;background:var(--danger-surface);color:var(--danger);padding:8px 12px;font:400 .875rem/1.25rem Geist,system-ui,sans-serif}"
+    },
+    {
+      "name": "Detail Card",
+      "kind": "card",
+      "refersTo": "detail-card",
+      "description": "A caption above a value, on a white surface with a hairline border.",
+      "html": "<dl class=\"ds-card\"><dt class=\"ds-card-label\">Email</dt><dd class=\"ds-card-value\">reviewer@example.com</dd></dl>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-card{margin:0;border:1px solid var(--border);border-radius:6px;background:var(--surface);padding:12px 16px}.ds-card-label{font:500 .875rem/1.25rem Geist,system-ui,sans-serif;color:var(--muted)}.ds-card-value{margin:2px 0 0;font:400 1rem/1.5rem Geist,system-ui,sans-serif;word-break:break-all}"
+    },
+    {
+      "name": "Site Header",
+      "kind": "nav",
+      "refersTo": "site-header",
+      "description": "A white bar with a bottom hairline holding only the wordmark text.",
+      "html": "<header class=\"ds-header\"><div class=\"ds-header-inner\">First Nest Demo</div></header>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-header{border-bottom:1px solid var(--border);background:var(--surface)}.ds-header-inner{max-width:384px;margin:0 auto;padding:16px 24px;font:600 .875rem/1.25rem Geist,system-ui,sans-serif;letter-spacing:-.025em}"
+    },
+    {
+      "name": "Loading Skeleton",
+      "kind": "custom",
+      "refersTo": "detail-card",
+      "description": "Pulsing Rule-coloured block that stands in for a card while its value loads.",
+      "html": "<div class=\"ds-skeleton\"></div>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-skeleton{height:56px;border-radius:6px;background:var(--border);animation:ds-pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes ds-pulse{50%{opacity:.5}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Open Ledger",
+    "overview": "The app is an open ledger: flat pages, plain rows, every entry legible at a glance. It exists to show a reviewer that a small auth flow was built deliberately, so the interface carries the same candour as the documented decisions behind it. Nothing is staged. A screen states what happened and what to do, then stops.\n\nThe voice is calm, direct and trustworthy. One narrow column of content sits on a quiet tinted page. Hierarchy comes from size, weight and spacing, never from decoration. A single blue marks the one thing you can act on, and the rest is ink on paper.\n\nIt rejects three things, all confirmed: the glossy SaaS look (gradients, glows, floating shadowed cards, big hero sections), the default auth-template look (a form centred on a grey backdrop, an invented logo, \"Welcome back\" copy), and the colourful-shop look (several accent colours, badges, promo banners). The system is meant to grow into a shop without becoming any of these.",
+    "keyCharacteristics": [
+      "Flat: depth comes from a tinted page, a white surface and a 1px rule, never from shadow.",
+      "One accent, used for actions and focus only.",
+      "One typeface, hierarchy by weight and size.",
+      "A single 384px column, generous top and bottom space.",
+      "Light and dark follow the system setting; both are first-class."
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "Ledger Blue is the only accent. It marks what can be acted on and where focus is. If something is blue, it is interactive.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Is For Errors Rule",
+        "body": "Alert Red appears only when something went wrong. It is never used for emphasis, sale tags or decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinted Neutral Rule",
+        "body": "Neutrals carry a trace of the accent's hue (255 to 260). Never use pure grey or pure black for text or borders; pure white is reserved for the Page surface.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Geist only. Hierarchy comes from weight (400, 500, 600) and size, not from adding a second face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Heading Rule",
+        "body": "One headline per page, semibold, never above 1.5rem in this column layout. A heading announces the page, it does not perform.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Column Rule",
+        "body": "Forms and detail views live in the 384px column. Do not widen it to fill the screen.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. Separate them with tone and a 1px Rule, never with a shadow. If an overlay (menu, dialog) is added later, it may take one very soft shadow, and that decision belongs in this file first.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Radius Rule",
+        "body": "6px everywhere. Do not introduce a second radius for emphasis.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** keep Ledger Blue for actions and focus only (The One Voice Rule).",
+      "**Do** separate surfaces with the Page/Paper tone difference and a 1px Rule.",
+      "**Do** use 6px radius on everything, and 150ms colour-only transitions for state changes.",
+      "**Do** keep a visible 2px focus outline on every interactive element, and announce errors with `role=\"alert\"`.",
+      "**Do** use the glossary's words in copy: User, Registration, Login.",
+      "**Do** design the dark theme alongside the light one; both follow the system setting."
+    ],
+    "donts": [
+      "**Don't** use the glossy SaaS look: no gradients, glows, glass, floating shadowed cards or oversized hero headings.",
+      "**Don't** use the default auth-template look: no form floating on a grey backdrop, no invented logo or brand mark, no \"Welcome back\" copy.",
+      "**Don't** make it a colourful shop: no second accent colour, no badges, no promo banners, no decorative red.",
+      "**Don't** add a second typeface or a second radius.",
+      "**Don't** use pure grey or pure black for text or borders.",
+      "**Don't** say which field was wrong on a failed Login.",
+      "**Don't** use the words Account, Member, Customer, Sign-up or Sign-in in the interface."
+    ]
+  }
+}
