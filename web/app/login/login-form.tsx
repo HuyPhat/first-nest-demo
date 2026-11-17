@@ -16,25 +16,22 @@ export function LoginForm() {
     const form = new FormData(e.currentTarget);
     setError(undefined);
     setPending(true);
-    try {
-      // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          email: form.get("email"),
-          password: form.get("password"),
-        }),
-      });
-      if (res.ok) return router.push("/profile");
-      setError(
-        res.status === 401
-          ? "Invalid email or password."
-          : "Something went wrong. Try again.",
-      );
-    } catch {
-      setError("Something went wrong. Try again.");
-    }
+    // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
+    // A network failure leaves res null and gets the same message as a server error.
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        email: form.get("email"),
+        password: form.get("password"),
+      }),
+    }).catch(() => null);
+    if (res?.ok) return router.push("/profile");
+    setError(
+      res?.status === 401
+        ? "Invalid email or password."
+        : "Something went wrong. Try again.",
+    );
     setPending(false);
   }
 
