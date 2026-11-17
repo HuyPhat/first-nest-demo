@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { apiUrl } from "@/lib/api-url";
 
 export const metadata: Metadata = { title: "Your profile" };
 
@@ -19,7 +20,7 @@ export default function ProfilePage() {
 async function Profile() {
   // Calls Me from the server, forwarding the login cookie. 401 (no cookie, bad or expired token) means logged out; anything else is an outage, not a logout.
   const res = await fetch(
-    `${process.env.API_URL ?? "http://localhost:3000"}/auth/me`,
+    `${apiUrl()}/auth/me`,
     { headers: { cookie: (await cookies()).toString() } },
   );
   if (res.status === 401) redirect("/login");

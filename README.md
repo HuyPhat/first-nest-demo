@@ -74,7 +74,9 @@ Database changes: edit `api/src/db/schema.ts`, run `pnpm db:generate`, then `pnp
 
 ## Web
 
-The browser only talks to the web origin. Next.js rewrites `/api/*` to the API (`API_URL`, default `http://localhost:3000`), so there is no CORS ([ADR 0001](docs/adr/0001-jwt-in-httponly-cookie-with-nextjs-rewrite.md)).
+The browser only talks to the web origin. Next.js rewrites `/api/*` to the API at `API_URL`, so there is no CORS ([ADR 0001](docs/adr/0001-jwt-in-httponly-cookie-with-nextjs-rewrite.md)).
+
+`API_URL` defaults to `http://localhost:3000` in development only. Any production-mode command (`pnpm build`, `pnpm start`, `next typegen`) fails or errors without it. Set it to the same value at build time (the rewrite is fixed then) and at run time (the profile page reads it on each request).
 
 | Route | What it does |
 |---|---|
@@ -88,7 +90,7 @@ cd api && pnpm test           # Vitest against the first_nest_test database (cre
 cd web && pnpm test           # Playwright: starts the API (first_nest_test) and the web app itself
 ```
 
-Run `pnpm lint` and `pnpm exec tsc --noEmit` in either folder to check the code the way CI does. For `web/`, run `pnpm exec next typegen` first on a fresh checkout.
+Run `pnpm lint` and `pnpm exec tsc --noEmit` in either folder to check the code the way CI does. For `web/`, run `API_URL=http://localhost:3000 pnpm exec next typegen` first on a fresh checkout.
 
 CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs typecheck, lint and tests for `api` and `web` on every pull request and push to `main`.
 

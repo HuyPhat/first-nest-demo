@@ -17,7 +17,7 @@ Rejected:
 
 Other review notes, not applied:
 
-- The profile page's server-side fetch calls `API_URL` directly, not the `/api` rewrite, because a server fetch needs an absolute URL. `API_URL ?? "http://localhost:3000"` is written in both `next.config.ts` and `app/profile/page.tsx`.
+- The profile page's server-side fetch calls `API_URL` directly, not the `/api` rewrite, because a server fetch needs an absolute URL. (The `API_URL` default is now in one place, `web/lib/api-url.ts`.)
 - The "expired" e2e test sends an invalid token, not a genuinely expired JWT.
 - The profile heading can flash before the redirect, because the redirect happens inside `<Suspense>` under `cacheComponents`.
 - No `DESIGN.md` yet; `/impeccable document` can record the shipped design later.

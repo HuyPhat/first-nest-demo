@@ -72,8 +72,11 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
         working-directory: web
       # LayoutProps and other route types are generated, and a fresh checkout has none.
+      # typegen loads next.config.ts in production mode, which requires API_URL (any value will do here).
       - run: pnpm exec next typegen
         working-directory: web
+        env:
+          API_URL: http://localhost:3000
       - run: pnpm exec tsc --noEmit
         working-directory: web
       - run: pnpm lint
