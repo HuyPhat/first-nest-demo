@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-17T15:44:30.319Z",
+  "generatedAt": "2026-11-17T15:52:17.470Z",
   "title": "Design System: First Nest Demo",
   "extensions": {
     "colorMeta": {
@@ -236,6 +236,14 @@
       "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--field-border:oklch(0.64 0.02 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-field{display:flex;flex-direction:column;gap:6px;font:500 .875rem/1.25rem Geist,system-ui,sans-serif}.ds-input{border:1px solid var(--field-border);border-radius:6px;background:var(--surface);color:var(--foreground);padding:8px 12px;font:400 1rem/1.5rem Geist,system-ui,sans-serif}.ds-input::placeholder{color:var(--muted)}.ds-input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
     },
     {
+      "name": "Password Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A password input with a text Show/Hide toggle inside its right edge; the label uses for/id so the toggle is not part of the field's name.",
+      "html": "<div class=\"ds-pw\"><label class=\"ds-pw-label\" for=\"ds-pw\">Password</label><div class=\"ds-pw-wrap\"><input id=\"ds-pw\" class=\"ds-pw-input\" type=\"password\"><button type=\"button\" class=\"ds-pw-toggle\">Show</button></div></div>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--field-border:oklch(0.64 0.02 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-pw{display:flex;flex-direction:column;gap:6px}.ds-pw-label{font:500 .875rem/1.25rem Geist,system-ui,sans-serif}.ds-pw-wrap{position:relative}.ds-pw-input{box-sizing:border-box;width:100%;border:1px solid var(--field-border);border-radius:6px;background:var(--surface);color:var(--foreground);padding:8px 64px 8px 12px;font:400 1rem/1.5rem Geist,system-ui,sans-serif}.ds-pw-toggle{position:absolute;top:0;bottom:0;right:0;border:0;border-radius:6px;background:transparent;color:var(--accent);padding:0 12px;font:500 .875rem/1.25rem Geist,system-ui,sans-serif;cursor:pointer;transition:color 150ms}.ds-pw-toggle:hover{color:var(--accent-hover)}.ds-pw-input:focus-visible,.ds-pw-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
+    },
+    {
       "name": "Error Alert",
       "kind": "custom",
       "refersTo": "alert",
@@ -258,6 +266,14 @@
       "description": "A white bar with a bottom hairline holding only the wordmark text.",
       "html": "<header class=\"ds-header\"><div class=\"ds-header-inner\">First Nest Demo</div></header>",
       "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--field-border:oklch(0.64 0.02 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-header{border-bottom:1px solid var(--border);background:var(--surface)}.ds-header-inner{max-width:384px;margin:0 auto;padding:16px 24px;font:600 .875rem/1.25rem Geist,system-ui,sans-serif;letter-spacing:-.025em}"
+    },
+    {
+      "name": "Login Wordmark",
+      "kind": "custom",
+      "refersTo": "site-header",
+      "description": "The app name as plain Brand-type text at the top of /login, which has no header. Not a label for the title.",
+      "html": "<p class=\"ds-wordmark\">First Nest Demo</p>",
+      "css": ":host{--background:oklch(0.975 0.006 255);--surface:oklch(1 0 0);--foreground:oklch(0.22 0.02 260);--muted:oklch(0.48 0.02 260);--border:oklch(0.89 0.008 260);--field-border:oklch(0.64 0.02 260);--accent:oklch(0.45 0.13 258);--accent-hover:oklch(0.39 0.13 258);--on-accent:oklch(0.99 0.003 255);--danger:oklch(0.48 0.17 25);--danger-surface:oklch(0.96 0.025 25);font-family:Geist,system-ui,sans-serif;color:var(--foreground)}.ds-wordmark{margin:0;font:600 .875rem/1.25rem Geist,system-ui,sans-serif;letter-spacing:-.025em}"
     },
     {
       "name": "Loading Skeleton",
