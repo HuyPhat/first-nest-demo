@@ -8,7 +8,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "First Nest Demo",
+  title: { default: "First Nest Demo", template: "%s | First Nest Demo" },
   description: "User sign-in demo: NestJS API, Next.js web app.",
 };
 
