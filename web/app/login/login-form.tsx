@@ -12,6 +12,7 @@ export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string>();
   const [pending, setPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   // Only a rejected Login marks the fields; a network or server failure is not about them.
   const fieldAria = {
     "aria-describedby": error ? "login-error" : undefined,
@@ -57,17 +58,32 @@ export function LoginForm() {
           {...fieldAria}
         />
       </label>
-      <label className="flex flex-col gap-1.5 text-sm font-medium">
-        Password
-        <input
-          name="password"
-          type="password"
-          required
-          autoComplete="current-password"
-          className={field}
-          {...fieldAria}
-        />
-      </label>
+      {/* htmlFor, not a wrapping label: the Show button must not become part of the field's name. */}
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="password" className="text-sm font-medium">
+          Password
+        </label>
+        <div className="relative">
+          <input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            required
+            autoComplete="current-password"
+            enterKeyHint="go"
+            className={`${field} w-full pr-16`}
+            {...fieldAria}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-controls="password"
+            className="absolute inset-y-0 right-0 rounded-md px-3 text-sm font-medium text-accent transition-colors duration-150 hover:text-accent-hover"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
+      </div>
       <button
         type="submit"
         disabled={pending}

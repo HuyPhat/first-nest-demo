@@ -145,10 +145,10 @@ Paper `oklch(0.18 0.012 260)`, Page `oklch(0.225 0.014 260)`, Ink `oklch(0.95 0.
 
 ### Hierarchy
 - **Headline** (600, 1.5rem, 2rem line height, -0.025em tracking): the page title, once per page, balanced wrapping.
-- **Body** (400, 1rem, 1.5rem): values, field text and the lede under a title (in Ink Soft).
+- **Body** (400, 1rem, 1.5rem): values, field text and the lede under a title (in Ink Soft, balanced wrapping so no single word is left alone on the last line).
 - **Label** (500, 0.875rem, 1.25rem): field labels and the caption above a value (the caption in Ink Soft). Error text uses the same size at regular weight.
 - **Button** (500, 1rem, 1.5rem): the primary button label.
-- **Brand** (600, 0.875rem, -0.025em tracking): the wordmark text in the site header.
+- **Brand** (600, 0.875rem, -0.025em tracking): the wordmark text "First Nest Demo", in the site header and, where there is no header, as plain text at the top of the page (see Navigation).
 
 ### Named Rules
 **The One Family Rule.** Geist only. Hierarchy comes from weight (400, 500, 600) and size, not from adding a second face.
@@ -194,7 +194,8 @@ Character: clear and firm, never showy.
 
 ### Inputs / Fields
 - **Style:** Page background, 1px Field Rule border, 6px radius, 12px by 8px padding, Body text, Ink Soft placeholder.
-- **Label:** wraps the field (a `label` element around the text and input), Label type, 6px gap.
+- **Label:** wraps the field (a `label` element around the text and input), Label type, 6px gap. A field that carries a control inside it (the password) uses `label` with `for` instead, so the control does not become part of the field's name.
+- **Password reveal:** a text button inside the right edge of the password field, reading "Show" or "Hide" (Label type, Ledger Blue, no fill, 6px radius, full field height, 12px side padding). It is the one place Ledger Blue appears as text. The field reserves 64px of right padding so typed text never runs under it. Hover moves the text to Ledger Blue Deep over 150ms; focus uses the global outline. It switches the input between `password` and `text`, keeping the value.
 - **Focus:** the global 2px Ledger Blue outline with 2px offset. No custom glow.
 - **Error:** the error is shown once, in the alert below the button (see Alert), not on each field. Both fields point at it with `aria-describedby`; they get `aria-invalid` only when the Login was rejected, not for a network or server failure.
 
@@ -209,6 +210,7 @@ Character: clear and firm, never showy.
 
 ### Navigation (site header)
 - **Style:** a bar with Page background and a bottom 1px Rule. It holds only the wordmark text "First Nest Demo" (Brand type), aligned to the content column. No links, menu or logo exist yet.
+- **Wordmark without a header:** `/login` has no header, so it opens with the same wordmark as plain Brand-type text, 40px above the title. It is the app's name, not a label for the title: no uppercase, no small caps, no rule or accent colour, and it must not be repeated above other headings.
 - **Mobile treatment:** none needed yet; it narrows with the column.
 
 ## Do's and Don'ts

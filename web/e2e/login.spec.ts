@@ -28,6 +28,29 @@ test('the login page has its own title and no site header', async ({ page }) => 
   await expect(page.getByRole('banner')).toHaveCount(0);
 });
 
+test('the login page names the app and is honest that Registration is not in the web app yet', async ({
+  page,
+}) => {
+  await page.goto('/login');
+
+  await expect(page.getByText('First Nest Demo', { exact: true })).toBeVisible();
+  await expect(page.getByText("Registration isn't in the web app yet.")).toBeVisible();
+});
+
+test('the password can be shown and hidden', async ({ page }) => {
+  await page.goto('/login');
+  const password = page.getByLabel('Password');
+  await password.fill('correct horse');
+  await expect(password).toHaveAttribute('type', 'password');
+
+  await page.getByRole('button', { name: 'Show' }).click();
+  await expect(password).toHaveAttribute('type', 'text');
+  await expect(password).toHaveValue('correct horse');
+
+  await page.getByRole('button', { name: 'Hide' }).click();
+  await expect(password).toHaveAttribute('type', 'password');
+});
+
 test('wrong credentials show one generic error on the login page', async ({
   page,
   request,
