@@ -19,6 +19,9 @@ export function RegisterForm() {
   const [navigating, startNavigation] = useTransition();
   const pending = submitting || navigating;
 
+  // Both fields point at the alert, as in Login; aria-invalid says which one it is about.
+  const describedBy = problem ? "register-error" : undefined;
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -52,13 +55,13 @@ export function RegisterForm() {
           required
           autoComplete="email"
           className={field}
-          aria-describedby={problem ? "register-error" : undefined}
+          aria-describedby={describedBy}
           aria-invalid={problem === "taken" || problem === "invalid" || undefined}
         />
       </label>
       <PasswordField
         autoComplete="new-password"
-        aria-describedby={problem === "invalid" ? "register-hint register-error" : "register-hint"}
+        aria-describedby={problem ? `register-hint ${describedBy}` : "register-hint"}
         aria-invalid={problem === "invalid" || undefined}
       >
         {/* The API's minimum, copied here so the rule is visible before typing; an e2e test checks it. */}

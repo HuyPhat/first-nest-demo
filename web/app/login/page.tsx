@@ -12,7 +12,7 @@ export default function LoginPage({ searchParams }: PageProps<"/login">) {
       <p className="mb-10 text-sm font-semibold tracking-tight">First Nest Demo</p>
       <h1 className="text-2xl font-semibold tracking-tight text-balance">Log in</h1>
       <p className="mt-2 text-balance text-muted">
-        Use the email and password you registered with. No account yet?{" "}
+        Use the email and password you registered with. Not registered yet?{" "}
         <Link href="/register" className="font-medium text-accent underline hover:text-accent-hover">
           Register
         </Link>

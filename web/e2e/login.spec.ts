@@ -34,6 +34,8 @@ test('the login page names the app and links to Registration', async ({ page }) 
   await expect(page.getByText('First Nest Demo', { exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Register' })).toHaveAttribute('href', '/register');
   await expect(page.getByText('Registration isn')).toHaveCount(0);
+  // PRODUCT.md and the glossary: UI copy says Registration/Register, never "account".
+  await expect(page.getByText(/account/i)).toHaveCount(0);
 });
 
 test('the password can be shown and hidden', async ({ page }) => {

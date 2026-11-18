@@ -106,8 +106,14 @@ test('an unreachable server and a server error each get their own message', asyn
   await page.route('**/api/auth/register', (route) => route.abort());
   await page.getByRole('button', { name: 'Register' }).click();
   await expect(alert).toHaveText("Can't reach the server. Check your connection and try again.");
-  // Not about the input, so the fields are not marked invalid, and the form can be retried.
-  await expect(page.getByLabel('Email')).not.toHaveAttribute('aria-invalid', 'true');
+  // Both fields point at the alert (as in Login), but it is not about the input: not marked invalid.
+  for (const field of ['Email', 'Password']) {
+    await expect(page.getByLabel(field)).toHaveAccessibleDescription(
+      new RegExp("Can't reach the server"),
+    );
+    await expect(page.getByLabel(field)).not.toHaveAttribute('aria-invalid', 'true');
+  }
+  // The form can be retried.
   await expect(page.getByRole('button', { name: 'Register' })).toBeEnabled();
 
   await page.unroute('**/api/auth/register');

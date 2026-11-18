@@ -195,10 +195,11 @@ Character: clear and firm, never showy.
 ### Inputs / Fields
 - **Style:** Page background, 1px Field Rule border, 6px radius, 12px by 8px padding, Body text, Ink Soft placeholder.
 - **Label:** wraps the field (a `label` element around the text and input), Label type, 6px gap. A field that carries a control inside it (the password) uses `label` with `for` instead, so the control does not become part of the field's name.
-- **Password reveal:** a text button inside the right edge of the password field, reading "Show" or "Hide" (Label type, Ledger Blue, no fill, 6px radius, full field height, 12px side padding). It is the one place Ledger Blue appears as text. The field reserves 64px of right padding so typed text never runs under it. Hover moves the text to Ledger Blue Deep over 150ms; focus uses the global outline. It switches the input between `password` and `text`, keeping the value.
+- **Password reveal:** a text button inside the right edge of the password field, reading "Show" or "Hide" (Label type, Ledger Blue, no fill, 6px radius, full field height, 12px side padding). It is one of three kinds of Ledger Blue text (with the header's Log out button and inline links, below). The field reserves 64px of right padding so typed text never runs under it. Hover moves the text to Ledger Blue Deep over 150ms; focus uses the global outline. It switches the input between `password` and `text`, keeping the value.
 - **Focus:** the global 2px Ledger Blue outline with 2px offset. No custom glow.
-- **Registration hint:** the Registration password field has a line under it, "At least 8 characters" (Label type, Ink Soft), tied to the input with `aria-describedby`. The Registration form switches off the browser's own validation; the API's answer is shown in the alert, and `aria-invalid` is set on the field the problem is about (the email for an email already taken, both fields for malformed input).
+- **Registration hint:** the Registration password field has a line under it, "At least 8 characters" (Label size, Ink Soft), tied to the input with `aria-describedby`. The Registration form switches off the browser's own validation; the API's answer is shown in the alert, both fields point at the alert with `aria-describedby` (as in Login), and `aria-invalid` is set only on the field the problem is about (the email for an email already taken, both fields for malformed input).
 - **Error:** the error is shown once, in the alert below the button (see Alert), not on each field. Both fields point at it with `aria-describedby`; they get `aria-invalid` only when the Login was rejected, not for a network or server failure.
+- **Inline links:** the "Register" / "Log in" links under each title and the "Log in" link inside the Registration alert are Body-size text in Ledger Blue (Ledger Blue Deep on hover), medium weight and underlined, so they read as links without a button; in the red alert the link keeps the alert's red.
 
 ### Alert (error message)
 - **Style:** Alert Wash background, Alert Red text, Label size, 6px radius, 12px by 8px padding, no border. Rendered with `role="alert"` so it is announced.
@@ -207,7 +208,7 @@ Character: clear and firm, never showy.
 - **Copy:** three cases, each says what failed and what to do. A rejected Login never reveals which field was wrong ("Invalid email or password."); an unreachable server says so ("Can't reach the server. Check your connection and try again."); anything else blames the system, not the User ("Something went wrong on our side. Try again.").
 
 ### Notice (success message)
-- **Style:** Surface background, 1px Rule border, Label size, 6px radius, 12px by 8px padding, Ink text. Rendered with `role="status"` so it is announced politely. No colour: the system has no success hue, Ledger Blue marks actions and Alert Red is only for errors.
+- **Style:** Page background, 1px Rule border, Label size, 6px radius, 12px by 8px padding, Ink text. Rendered with `role="status"` so it is announced politely. No colour: the system has no success hue, Ledger Blue marks actions and Alert Red is only for errors.
 - **Use:** one place so far, `/login` after Registration (`?registered=1`): "Registration complete. Log in with your email and password." It sits between the lede and the form.
 
 ### Detail card
@@ -216,7 +217,7 @@ Character: clear and firm, never showy.
 
 ### Navigation (site header)
 - **Style:** a bar with Page background and a bottom 1px Rule. It holds the wordmark text "First Nest Demo" (Brand type) on the left and a "Log out" text button on the right (Label type, Ledger Blue, no fill, same hover as the password reveal), both inside the content column. No other links, menu or logo exist yet.
-- **Wordmark without a header:** `/login` has no header, so it opens with the same wordmark as plain Brand-type text, 40px above the title. It is the app's name, not a label for the title: no uppercase, no small caps, no rule or accent colour, and it must not be repeated above other headings.
+- **Wordmark without a header:** `/login` and `/register` have no header, so each opens with the same wordmark as plain Brand-type text, 40px above the title. It is the app's name, not a label for the title: no uppercase, no small caps, no rule or accent colour, and it must not be repeated above other headings.
 - **Mobile treatment:** none needed yet; it narrows with the column.
 
 ## Do's and Don'ts
