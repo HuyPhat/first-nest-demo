@@ -29,7 +29,7 @@ export function RegisterForm() {
       // Registration does not log the User in, so go to Login. A network failure leaves res null;
       // it and a server error each get their own message.
       const res = await postJson("/api/auth/register", body);
-      if (res?.ok) return router.push("/login?registered=1");
+      if (res?.ok) return router.replace("/login?registered=1");
       setProblem(
         !res ? "network" : res.status === 409 ? "taken" : res.status === 400 ? "invalid" : "server",
       );

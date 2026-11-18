@@ -69,12 +69,12 @@ Database changes: edit `api/src/db/schema.ts`, run `pnpm db:generate`, then `pnp
 
 The browser only talks to the web origin. Next.js rewrites `/api/*` to the API at `API_URL`, so there is no CORS ([ADR 0001](docs/adr/0001-jwt-in-httponly-cookie-with-nextjs-rewrite.md)).
 
-`API_URL` defaults to `http://localhost:3000` in development only. Any production-mode command (`pnpm build`, `pnpm start`, `next typegen`) fails or errors without it. Set it to the same value at build time (the rewrite is fixed then) and at run time (the profile page reads it on each request).
+`API_URL` defaults to `http://localhost:3000` in development only. Any production-mode command (`pnpm build`, `pnpm start`, `next typegen`) fails or errors without it. Set it to the same value at build time (the rewrite is fixed then) and at run time (the profile page reads it on each request, and the login and register pages when the visitor has a login cookie).
 
 | Route | What it does |
 |---|---|
-| `/register` | Registration form. Success goes to `/login?registered=1`, which shows a notice. An email already taken, malformed input and server problems each show an error |
-| `/login` | Login form. Wrong credentials show one generic error |
+| `/register` | Registration form. Success goes to `/login?registered=1`, which shows a notice. An email already taken, malformed input and server problems each show an error. A logged-in User is sent to `/profile` |
+| `/login` | Login form. Wrong credentials show one generic error. A logged-in User is sent to `/profile`; an expired or invalid cookie, or an unreachable API, still shows the form |
 | `/profile` | Server-rendered; calls Me with the login cookie and shows the email. Redirects to `/login` when logged out or expired. The header's Log out button clears the cookie and returns to `/login` |
 
 ## Tests

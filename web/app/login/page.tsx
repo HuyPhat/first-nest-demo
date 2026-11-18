@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { LoggedOutOnly } from "../logged-out-only";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = { title: "Log in" };
@@ -21,7 +22,11 @@ export default function LoginPage({ searchParams }: PageProps<"/login">) {
       <Suspense>
         <RegisteredNotice searchParams={searchParams} />
       </Suspense>
-      <LoginForm />
+      <Suspense>
+        <LoggedOutOnly>
+          <LoginForm />
+        </LoggedOutOnly>
+      </Suspense>
     </main>
   );
 }

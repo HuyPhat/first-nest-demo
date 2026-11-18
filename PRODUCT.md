@@ -20,10 +20,10 @@ A small, honest NestJS + Next.js app whose auth design is documented and deliber
 - Issues are worked as tickets on GitHub; the domain language lives in `GLOSSARY.md` and `docs/adr/`.
 
 ## Capabilities and Constraints
-- Today: Login, and a profile page showing the User's email (server-rendered, calls Me with the login cookie). Registration page and Logout in the web app are not built yet.
+- Today: Registration, Login and Log out, and a profile page showing the User's email (server-rendered, calls Me with the login cookie). Registration does not log the User in: they log in themselves afterwards.
 - Use the glossary's terms in UI copy: **User**, **Registration**, **Login**. Avoid Account, Member, Customer, Sign-up, Sign-in.
 - Wrong credentials show one generic message that never says whether the email or the password was wrong.
-- Logged-out or expired logins land on the login page.
+- Logged-out or expired logins land on the login page. A logged-in User who opens the Login or Registration page lands on the profile page instead.
 - E-commerce scope (catalogue, cart, orders) is undecided and not yet defined; "Customer" is reserved for the ordering context.
 
 ## Evidence on Hand

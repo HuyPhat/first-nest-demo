@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import { LoggedOutOnly } from "../logged-out-only";
 import { RegisterForm } from "./register-form";
 
 export const metadata: Metadata = { title: "Register" };
@@ -16,7 +18,11 @@ export default function RegisterPage() {
         </Link>
         .
       </p>
-      <RegisterForm />
+      <Suspense>
+        <LoggedOutOnly>
+          <RegisterForm />
+        </LoggedOutOnly>
+      </Suspense>
     </main>
   );
 }
