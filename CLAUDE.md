@@ -19,3 +19,7 @@ Start a ticket with `/ticket <N>`: own branch, PR into `main`, the user merges. 
 ### Tests and code
 
 TDD sets the tests (one per behaviour, at the agreed seam); ponytail sets the production code (the least that passes each test). Ponytail simplifications keep every behaviour test green.
+
+### Design skills
+
+impeccable is the only design skill, and `DESIGN.md` is the source of truth for the look. Read `docs/agents/design-skills.md` before installing or running another design skill (ui-ux-pro-max, taste-skill), and when shop or marketing screens begin.
