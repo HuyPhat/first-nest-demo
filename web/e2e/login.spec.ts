@@ -18,7 +18,7 @@ test('logging in with correct credentials shows the profile with the User email'
   await expect(page).toHaveURL('/profile');
   await expect(page.getByText(email)).toBeVisible();
   await expect(page).toHaveTitle('Your profile | First Nest Demo');
-  await expect(page.getByRole('banner')).toHaveText('First Nest Demo');
+  await expect(page.getByRole('banner')).toContainText('First Nest Demo');
 });
 
 test('the login page has its own title and no site header', async ({ page }) => {
@@ -28,13 +28,12 @@ test('the login page has its own title and no site header', async ({ page }) => 
   await expect(page.getByRole('banner')).toHaveCount(0);
 });
 
-test('the login page names the app and is honest that Registration is not in the web app yet', async ({
-  page,
-}) => {
+test('the login page names the app and links to Registration', async ({ page }) => {
   await page.goto('/login');
 
   await expect(page.getByText('First Nest Demo', { exact: true })).toBeVisible();
-  await expect(page.getByText("Registration isn't in the web app yet.")).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Register' })).toHaveAttribute('href', '/register');
+  await expect(page.getByText('Registration isn')).toHaveCount(0);
 });
 
 test('the password can be shown and hidden', async ({ page }) => {

@@ -1,18 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
-const field =
-  "rounded-md border border-field-border bg-surface px-3 py-2 text-base text-foreground placeholder:text-muted";
+import { useState, useTransition } from "react";
+import { field, PasswordField } from "../fields";
 
 const INVALID_LOGIN = "Invalid email or password.";
 
 export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string>();
-  const [pending, setPending] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  // Busy until the navigation finishes, then free again: Next keeps this page's state when we leave it.
+  const [navigating, startNavigation] = useTransition();
+  const pending = submitting || navigating;
   // Only a rejected Login marks the fields; a network or server failure is not about them.
   const fieldAria = {
     "aria-describedby": error ? "login-error" : undefined,
@@ -23,7 +23,7 @@ export function LoginForm() {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     setError(undefined);
-    setPending(true);
+    setSubmitting(true);
     // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
     // A network failure leaves res null; it and a server error each get their own message.
     const res = await fetch("/api/auth/login", {
@@ -34,7 +34,8 @@ export function LoginForm() {
         password: form.get("password"),
       }),
     }).catch(() => null);
-    if (res?.ok) return router.push("/profile");
+    setSubmitting(false);
+    if (res?.ok) return startNavigation(() => router.push("/profile"));
     setError(
       !res
         ? "Can't reach the server. Check your connection and try again."
@@ -42,7 +43,6 @@ export function LoginForm() {
           ? INVALID_LOGIN
           : "Something went wrong on our side. Try again.",
     );
-    setPending(false);
   }
 
   return (
@@ -58,32 +58,7 @@ export function LoginForm() {
           {...fieldAria}
         />
       </label>
-      {/* htmlFor, not a wrapping label: the Show button must not become part of the field's name. */}
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor="password" className="text-sm font-medium">
-          Password
-        </label>
-        <div className="relative">
-          <input
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            required
-            autoComplete="current-password"
-            enterKeyHint="go"
-            className={`${field} w-full pr-16`}
-            {...fieldAria}
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            aria-controls="password"
-            className="absolute inset-y-0 right-0 rounded-md px-3 text-sm font-medium text-accent transition-colors duration-150 hover:text-accent-hover"
-          >
-            {showPassword ? "Hide" : "Show"}
-          </button>
-        </div>
-      </div>
+      <PasswordField autoComplete="current-password" {...fieldAria} />
       <button
         type="submit"
         disabled={pending}
