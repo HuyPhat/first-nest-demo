@@ -12,6 +12,10 @@ for (const path of ['/login', '/register', '/login?registered=1']) {
   });
 }
 
+// Not covered by a test: an unreachable API and "no cookie, no API call" (the Me call is made by the
+// Next server, which Playwright cannot intercept). Checked by hand against a fake API on 2026-11-18:
+// no cookie made no Me call; with a cookie, a 500 answer and a refused connection both still showed the form.
+
 // A cookie that is present but no longer valid must not count as logged in (and must not loop
 // /login -> /profile -> /login).
 for (const [path, button] of [
