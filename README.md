@@ -7,7 +7,7 @@ User registration and login: a NestJS API (`api/`) and a Next.js web app (`web/`
 | Part | Done | Not yet |
 |---|---|---|
 | API | Registration, Login, Logout, Me, Swagger | Refresh tokens, rate limiting, request logging |
-| Web | Login page, profile page | Registration and Logout pages ([#16](https://github.com/HuyPhat/first-nest-demo/issues/16)) |
+| Web | Register page, login page, profile page, Log out | |
 
 The full backlog is in [GitHub Issues](https://github.com/HuyPhat/first-nest-demo/issues); the spec is [#11](https://github.com/HuyPhat/first-nest-demo/issues/11).
 
@@ -48,20 +48,13 @@ pnpm install
 pnpm dev                      # http://localhost:3001
 ```
 
-There is no Registration page yet, so create a User first:
-
-```bash
-curl -X POST localhost:3001/api/auth/register -H 'content-type: application/json' \
-  -d '{"email":"ann@example.com","password":"correct horse"}'
-```
-
-Then log in at <http://localhost:3001/login>.
+Open <http://localhost:3001/register> to create a User, then log in at <http://localhost:3001/login>. Registration does not log you in.
 
 ## API
 
 | Method | Path | What it does |
 |---|---|---|
-| POST | `/auth/register` | Registration: creates a User and logs them in. 409 if the email is taken |
+| POST | `/auth/register` | Registration: creates a User; it does not log them in, call Login next. 409 if the email is taken |
 | POST | `/auth/login` | Login with email and password. 401 on wrong credentials |
 | POST | `/auth/logout` | Clears the login cookie (204) |
 | GET | `/auth/me` | The logged-in User. 401 without a valid cookie |
@@ -80,8 +73,9 @@ The browser only talks to the web origin. Next.js rewrites `/api/*` to the API a
 
 | Route | What it does |
 |---|---|
+| `/register` | Registration form. Success goes to `/login?registered=1`, which shows a notice. An email already taken, malformed input and server problems each show an error |
 | `/login` | Login form. Wrong credentials show one generic error |
-| `/profile` | Server-rendered; calls Me with the login cookie and shows the email. Redirects to `/login` when logged out or expired |
+| `/profile` | Server-rendered; calls Me with the login cookie and shows the email. Redirects to `/login` when logged out or expired. The header's Log out button clears the cookie and returns to `/login` |
 
 ## Tests
 

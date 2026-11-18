@@ -1,6 +1,6 @@
 import type { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { createTestApp, resetUsers } from './app.js';
+import { createTestApp, resetUsers, setCookies } from './app.js';
 
 describe('Register (POST /auth/register)', () => {
   let app: INestApplication;
@@ -26,6 +26,16 @@ describe('Register (POST /auth/register)', () => {
     expect(res.body.email).toBe('ann@example.com');
     expect(res.body.id).toMatch(/^[0-9a-f-]{36}$/);
     expect(res.text).not.toContain('correct horse');
+  });
+
+  it('does not log the new User in: no cookie is set', async () => {
+    const res = await register({
+      email: 'ann@example.com',
+      password: 'correct horse',
+    });
+
+    expect(res.status).toBe(201);
+    expect(setCookies(res)).toEqual([]);
   });
 
   it('trims and lower-cases the email', async () => {

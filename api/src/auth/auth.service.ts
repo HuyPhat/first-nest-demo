@@ -29,7 +29,7 @@ export class AuthService {
       .onConflictDoNothing({ target: users.email })
       .returning({ id: users.id, email: users.email });
     if (!user) throw new ConflictException('Email is already registered');
-    return { user, token: await this.jwt.signAsync({ sub: user.id }) };
+    return user;
   }
 
   async login(email: string, password: string) {

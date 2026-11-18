@@ -33,19 +33,15 @@ export class AuthController {
 
   @Post('register')
   @ApiOperation({
-    summary: 'Registration: become a User and be logged in',
-    description: 'Sets the HttpOnly login cookie and returns the new User.',
+    summary: 'Registration: become a User',
+    description:
+      'Returns the new User. It does not log them in: call Login next.',
   })
   @ApiCreatedResponse({ type: UserDto })
   @ApiBadRequestResponse({ description: 'Malformed email or password.' })
   @ApiConflictResponse({ description: 'The email is already registered.' })
-  async register(
-    @Body() dto: RegisterDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const { user, token } = await this.auth.register(dto.email, dto.password);
-    setLoginCookie(res, token);
-    return user;
+  register(@Body() dto: RegisterDto) {
+    return this.auth.register(dto.email, dto.password);
   }
 
   @Post('login')

@@ -16,18 +16,17 @@ describe('Staying logged in', () => {
       .post('/auth/register')
       .send({ email, password });
 
-  describe('Register', () => {
-    it('logs the new User in with an HttpOnly, SameSite=Lax cookie lasting an hour', async () => {
-      const res = await register();
+  const login = (email: string, password: string) =>
+    request(app.getHttpServer()).post('/auth/login').send({ email, password });
 
-      const [cookie] = setCookies(res);
-      expect(cookie).toMatch(/^access_token=[\w-]+\.[\w-]+\.[\w-]+;/);
-      expect(cookie).toContain('HttpOnly');
-      expect(cookie).toContain('SameSite=Lax');
-      expect(cookie).toContain('Max-Age=3600');
-      expect(cookie).not.toContain('Secure');
-    });
-  });
+  // Registration does not log the User in, so a cookie comes from Login.
+  const registerAndLogin = async (
+    email = 'ann@example.com',
+    password = 'correct horse',
+  ) => {
+    await register(email, password);
+    return login(email, password);
+  };
 
   const me = (cookie?: string) => {
     const req = request(app.getHttpServer()).get('/auth/me');
@@ -37,7 +36,7 @@ describe('Staying logged in', () => {
   it('marks the login cookie Secure in production', async () => {
     vi.stubEnv('NODE_ENV', 'production');
     try {
-      const res = await register();
+      const res = await registerAndLogin();
 
       expect(setCookies(res)[0]).toContain('Secure');
     } finally {
@@ -47,13 +46,13 @@ describe('Staying logged in', () => {
 
   describe('Me', () => {
     it('returns the current User with a valid cookie, and only its id and email', async () => {
-      const registered = await register('ann@example.com');
+      const loggedIn = await registerAndLogin('ann@example.com');
 
-      const res = await me(loginCookie(registered));
+      const res = await me(loginCookie(loggedIn));
 
       expect(res.status).toBe(200);
       expect(res.body).toEqual({
-        id: registered.body.id,
+        id: loggedIn.body.id,
         email: 'ann@example.com',
       });
     });
@@ -67,7 +66,7 @@ describe('Staying logged in', () => {
     });
 
     it('returns 401 with a tampered token', async () => {
-      const cookie = loginCookie(await register());
+      const cookie = loginCookie(await registerAndLogin());
       const [head, payload, signature] = cookie.split('.');
       const flipped = (signature[0] === 'A' ? 'B' : 'A') + signature.slice(1);
 
@@ -75,7 +74,7 @@ describe('Staying logged in', () => {
     });
 
     it('returns 401 when the User no longer exists', async () => {
-      const cookie = loginCookie(await register());
+      const cookie = loginCookie(await registerAndLogin());
       await resetUsers(app);
 
       expect((await me(cookie)).status).toBe(401);
@@ -84,7 +83,7 @@ describe('Staying logged in', () => {
     it('returns 401 once the token is over an hour old', async () => {
       vi.useFakeTimers({ toFake: ['Date'] });
       try {
-        const cookie = loginCookie(await register());
+        const cookie = loginCookie(await registerAndLogin());
 
         vi.setSystemTime(Date.now() + 59 * 60_000);
         expect((await me(cookie)).status).toBe(200);
@@ -97,10 +96,18 @@ describe('Staying logged in', () => {
     });
   });
 
-  const login = (email: string, password: string) =>
-    request(app.getHttpServer()).post('/auth/login').send({ email, password });
-
   describe('Login', () => {
+    it('sets an HttpOnly, SameSite=Lax cookie lasting an hour', async () => {
+      const res = await registerAndLogin();
+
+      const [cookie] = setCookies(res);
+      expect(cookie).toMatch(/^access_token=[\w-]+\.[\w-]+\.[\w-]+;/);
+      expect(cookie).toContain('HttpOnly');
+      expect(cookie).toContain('SameSite=Lax');
+      expect(cookie).toContain('Max-Age=3600');
+      expect(cookie).not.toContain('Secure');
+    });
+
     it('sets the login cookie and returns the User, whatever the email capitalisation', async () => {
       const registered = await register('ann@example.com', 'correct horse');
 
@@ -148,9 +155,12 @@ describe('Staying logged in', () => {
   describe('Logout', () => {
     it('clears the login cookie', async () => {
       const browser = request.agent(app.getHttpServer());
-      await browser
-        .post('/auth/register')
-        .send({ email: 'ann@example.com', password: 'correct horse' });
+      const credentials = {
+        email: 'ann@example.com',
+        password: 'correct horse',
+      };
+      await browser.post('/auth/register').send(credentials);
+      await browser.post('/auth/login').send(credentials);
       expect((await browser.get('/auth/me')).status).toBe(200);
 
       const res = await browser.post('/auth/logout');
