@@ -2,11 +2,20 @@
 
 import { useId, useState } from "react";
 
-export const field =
+const field =
   "rounded-md border border-field-border bg-surface px-3 py-2 text-base text-foreground placeholder:text-muted";
 
-// Shared by the Login and Registration forms. Extra props (autoComplete, aria-*) go to the input;
-// children render under it (a hint).
+// Shared by the Login and Registration forms. Extra props (aria-*) go to the input.
+export function EmailField(props: React.ComponentProps<"input">) {
+  return (
+    <label className="flex flex-col gap-1.5 text-sm font-medium">
+      Email
+      <input name="email" type="email" required autoComplete="email" className={field} {...props} />
+    </label>
+  );
+}
+
+// Extra props (autoComplete, aria-*) go to the input; children render under it (a hint).
 export function PasswordField({ children, ...input }: React.ComponentProps<"input">) {
   const [showPassword, setShowPassword] = useState(false);
   // Not a fixed id: Next keeps the previous page hidden in the DOM, so two pages can mount this at once.

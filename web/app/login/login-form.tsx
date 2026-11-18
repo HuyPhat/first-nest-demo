@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { field, PasswordField } from "../fields";
+import { postJson } from "@/lib/post-json";
+import { EmailField, PasswordField } from "../fields";
 
 const INVALID_LOGIN = "Invalid email or password.";
 
@@ -21,19 +22,11 @@ export function LoginForm() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
     setError(undefined);
     setSubmitting(true);
     // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
     // A network failure leaves res null; it and a server error each get their own message.
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        email: form.get("email"),
-        password: form.get("password"),
-      }),
-    }).catch(() => null);
+    const res = await postJson("/api/auth/login", Object.fromEntries(new FormData(e.currentTarget)));
     setSubmitting(false);
     if (res?.ok) return startNavigation(() => router.push("/profile"));
     setError(
@@ -47,17 +40,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={onSubmit} aria-busy={pending} className="mt-8 flex flex-col gap-5">
-      <label className="flex flex-col gap-1.5 text-sm font-medium">
-        Email
-        <input
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          className={field}
-          {...fieldAria}
-        />
-      </label>
+      <EmailField {...fieldAria} />
       <PasswordField autoComplete="current-password" {...fieldAria} />
       <button
         type="submit"

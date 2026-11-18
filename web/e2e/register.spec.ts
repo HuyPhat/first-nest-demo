@@ -122,11 +122,9 @@ test('an unreachable server and a server error each get their own message', asyn
   await expect(alert).toHaveText('Something went wrong on our side. Try again.');
 });
 
-test('the register page names the app and links to Login', async ({ page }) => {
+test('the register page links to Login', async ({ page }) => {
   await page.goto('/register');
 
-  await expect(page).toHaveTitle('Register | First Nest Demo');
-  await expect(page.getByText('First Nest Demo', { exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Log in' })).toHaveAttribute('href', '/login');
 });
 

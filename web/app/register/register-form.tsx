@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { field, PasswordField } from "../fields";
+import { postJson } from "@/lib/post-json";
+import { EmailField, PasswordField } from "../fields";
 
 const MESSAGES = {
   invalid: "Enter a valid email and a password of at least 8 characters.",
@@ -24,19 +25,11 @@ export function RegisterForm() {
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
     setProblem(undefined);
     setSubmitting(true);
-    // Same origin through the /api rewrite. Registration does not log the User in, so go to Login.
-    // A network failure leaves res null; it and a server error each get their own message.
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        email: form.get("email"),
-        password: form.get("password"),
-      }),
-    }).catch(() => null);
+    // Registration does not log the User in, so go to Login. A network failure leaves res null;
+    // it and a server error each get their own message.
+    const res = await postJson("/api/auth/register", Object.fromEntries(new FormData(e.currentTarget)));
     setSubmitting(false);
     if (res?.ok) return startNavigation(() => router.push("/login?registered=1"));
     setProblem(
@@ -47,18 +40,10 @@ export function RegisterForm() {
   return (
     // noValidate: the API is the one judge of the input; its answer is shown in our own alert.
     <form onSubmit={onSubmit} noValidate aria-busy={pending} className="mt-8 flex flex-col gap-5">
-      <label className="flex flex-col gap-1.5 text-sm font-medium">
-        Email
-        <input
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          className={field}
-          aria-describedby={describedBy}
-          aria-invalid={problem === "taken" || problem === "invalid" || undefined}
-        />
-      </label>
+      <EmailField
+        aria-describedby={describedBy}
+        aria-invalid={problem === "taken" || problem === "invalid" || undefined}
+      />
       <PasswordField
         autoComplete="new-password"
         aria-describedby={problem ? `register-hint ${describedBy}` : "register-hint"}
