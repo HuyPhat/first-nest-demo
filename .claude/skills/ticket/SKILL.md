@@ -23,16 +23,21 @@ Done when the issue's branch is checked out: `gh issue develop N --checkout --ba
 
 ## 4. Implement
 
-`mattpocock-skills:implement` is user-invoked only. Tell the user to run `/mattpocock-skills:implement #N`, then stop. Done when the user confirms it has committed on this branch.
+`mattpocock-skills:implement` is user-invoked only. Tell the user to run `/mattpocock-skills:implement #N`, then stop. Done when its commit is on this branch: the user says so, or `implement` finished in this conversation and `git log main..HEAD` lists the commit. Then go straight to step 5, without asking.
 
 ## 5. Review
 
-Invoke `ponytail:ponytail-review` on the diff against `main`. Done when the user has seen every finding and chosen which to apply; apply those, rerun the tests, commit. No findings: say so and move on.
+Invoke `ponytail:ponytail-review` on the diff against `main`, right after step 4. Show the user every finding, each sorted into one of two groups:
+
+- **Apply yourself:** a `delete:` or `yagni:` finding whose behaviour an existing test guards. Apply it, rerun the tests, commit, and say what you applied. A rerun that goes red: undo that change and move it to the group below.
+- **Ask:** every other finding (`shrink:`, `stdlib:`, `native:`, and any `delete:` or `yagni:` no test guards). Give a recommendation for each; the user picks. Apply the picks, rerun the tests, commit.
+
+Done when every finding is applied or declined and the tests pass. No findings: say so and move on. Then go straight to step 6, without asking.
 
 ## 6. README
 
-Done when `README.md` matches the branch. If the diff against `main` changes an endpoint, route, command, env var, or setup step, or finishes something the README's Status table lists as not done, update the README and commit it on this branch. Otherwise leave it.
+Done when `README.md` matches the branch. If the diff against `main` changes an endpoint, route, command, env var, or setup step, or finishes something the README's Status table lists as not done, update the README and commit it on this branch. Otherwise leave it. Then go straight to step 7, without asking.
 
 ## 7. Ship
 
-Done when the PR is open and the user has the PR URL plus one `gh pr checks` report. Push the branch, then `gh pr create` with a body written by `mattpocock-skills:pr`, ending in the checkbox line from `.github/pull_request_template.md` (ticked, or ticked with "no README change needed") and `Closes #N`. `gh pr create --body` skips the template, so add the line by hand. Merging stays with the user.
+Done when the PR is open and the user has the PR URL plus one `gh pr checks` report. Push the branch, then `gh pr create` with a body written by `mattpocock-skills:pr`, ending in the checkbox line from `.github/pull_request_template.md` (ticked, or ticked with "no README change needed") and `Closes #N`. `gh pr create --body` skips the template, so add the line by hand. Open it without asking: the ticket's request is the go-ahead. Merging stays with the user.
