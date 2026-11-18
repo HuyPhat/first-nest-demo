@@ -10,32 +10,31 @@ const INVALID_LOGIN = "Invalid email or password.";
 export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string>();
-  const [submitting, setSubmitting] = useState(false);
-  // Busy until the navigation finishes, then free again: Next keeps this page's state when we leave it.
-  const [navigating, startNavigation] = useTransition();
-  const pending = submitting || navigating;
+  // Busy until the request and navigation finish, then free again: Next keeps this page's state when we leave it.
+  const [pending, startTransition] = useTransition();
   // Only a rejected Login marks the fields; a network or server failure is not about them.
   const fieldAria = {
     "aria-describedby": error ? "login-error" : undefined,
     "aria-invalid": error === INVALID_LOGIN || undefined,
   };
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const body = Object.fromEntries(new FormData(e.currentTarget));
     setError(undefined);
-    setSubmitting(true);
-    // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
-    // A network failure leaves res null; it and a server error each get their own message.
-    const res = await postJson("/api/auth/login", Object.fromEntries(new FormData(e.currentTarget)));
-    setSubmitting(false);
-    if (res?.ok) return startNavigation(() => router.push("/profile"));
-    setError(
-      !res
-        ? "Can't reach the server. Check your connection and try again."
-        : res.status === 401
-          ? INVALID_LOGIN
-          : "Something went wrong on our side. Try again.",
-    );
+    startTransition(async () => {
+      // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
+      // A network failure leaves res null; it and a server error each get their own message.
+      const res = await postJson("/api/auth/login", body);
+      if (res?.ok) return router.push("/profile");
+      setError(
+        !res
+          ? "Can't reach the server. Check your connection and try again."
+          : res.status === 401
+            ? INVALID_LOGIN
+            : "Something went wrong on our side. Try again.",
+      );
+    });
   }
 
   return (

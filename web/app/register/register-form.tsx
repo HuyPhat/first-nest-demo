@@ -15,26 +15,25 @@ const MESSAGES = {
 export function RegisterForm() {
   const router = useRouter();
   const [problem, setProblem] = useState<"taken" | "invalid" | "network" | "server">();
-  const [submitting, setSubmitting] = useState(false);
-  // Busy until the navigation finishes, then free again: Next keeps this page's state when we leave it.
-  const [navigating, startNavigation] = useTransition();
-  const pending = submitting || navigating;
+  // Busy until the request and navigation finish, then free again: Next keeps this page's state when we leave it.
+  const [pending, startTransition] = useTransition();
 
   // Both fields point at the alert, as in Login; aria-invalid says which one it is about.
   const describedBy = problem ? "register-error" : undefined;
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const body = Object.fromEntries(new FormData(e.currentTarget));
     setProblem(undefined);
-    setSubmitting(true);
-    // Registration does not log the User in, so go to Login. A network failure leaves res null;
-    // it and a server error each get their own message.
-    const res = await postJson("/api/auth/register", Object.fromEntries(new FormData(e.currentTarget)));
-    setSubmitting(false);
-    if (res?.ok) return startNavigation(() => router.push("/login?registered=1"));
-    setProblem(
-      !res ? "network" : res.status === 409 ? "taken" : res.status === 400 ? "invalid" : "server",
-    );
+    startTransition(async () => {
+      // Registration does not log the User in, so go to Login. A network failure leaves res null;
+      // it and a server error each get their own message.
+      const res = await postJson("/api/auth/register", body);
+      if (res?.ok) return router.push("/login?registered=1");
+      setProblem(
+        !res ? "network" : res.status === 409 ? "taken" : res.status === 400 ? "invalid" : "server",
+      );
+    });
   }
 
   return (
