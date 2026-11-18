@@ -26,7 +26,7 @@ export function LoginForm() {
       // Same origin: the /api rewrite proxies to the API, which sets the HttpOnly login cookie.
       // A network failure leaves res null; it and a server error each get their own message.
       const res = await postJson("/api/auth/login", body);
-      if (res?.ok) return router.push("/profile");
+      if (res?.ok) return router.replace("/profile");
       setError(
         !res
           ? "Can't reach the server. Check your connection and try again."

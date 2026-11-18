@@ -1,12 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+import { logIn } from './helpers';
 
-const password = 'correct horse';
-
-// Registration does not log in, so the browser logs in through the same /api rewrite the form uses.
-async function loggedIn(page: import('@playwright/test').Page) {
-  const email = `ann-${crypto.randomUUID()}@example.com`;
-  await page.request.post('/api/auth/register', { data: { email, password } });
-  await page.request.post('/api/auth/login', { data: { email, password } });
+async function loggedIn(page: Page) {
+  const email = await logIn(page);
   await page.goto('/profile');
   await expect(page.getByText(email)).toBeVisible();
 }
