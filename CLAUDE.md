@@ -14,7 +14,7 @@ Single-context: one `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/agen
 
 ### Tickets
 
-Start a ticket with `/ticket <N>`: own branch, PR into `main`, the user merges. All work lands on `main` through a PR.
+Start a ticket with `/ticket <N>`: own branch, PR into `main`, the user merges. All work lands on `main` through a PR. A change committed on its own branch goes straight to a PR (push, `gh pr create`), without asking; never commit to or push `main`, and the user merges.
 
 ### Tests and code
 
